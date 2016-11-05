@@ -4,17 +4,19 @@
 var Frame = require('./Frame')
 
 function Game () {
-this.gameScore = 0;
-this.NUMBER_OF_PINS = 10;
-this.gameFrames = [];
-this.gameOver = false;
+  this.gameScore = 0;
+  this.NUMBER_OF_PINS = 10;
+  this.gameFrames = [];
+  this.gameOver = false;
+  this.currentFrameNumber = this.gameFrames.length;
 
 }
 
 Game.prototype.roll = function () {
   this.isGameOver();
   var firstRoll = Math.floor(Math.random()*(this.NUMBER_OF_PINS + 1));
-  var secondRoll = Math.floor(Math.random()*(this.NUMBER_OF_PINS - firstRoll + 1));
+  var secondRoll = Math.floor(Math.random()*
+  (this.NUMBER_OF_PINS - firstRoll + 1));
   var roll = [firstRoll, secondRoll];
   var frame = new Frame(roll);
   this.addToGameFrames(frame);
@@ -22,9 +24,13 @@ Game.prototype.roll = function () {
   return roll;
 };
 
-
 Game.prototype.addToGameFrames = function (frames) {
   this.gameFrames.push(frames);
+  this.updateCurrentFrameNumber();
+};
+
+Game.prototype.updateCurrentFrameNumber = function () {
+    this.currentFrameNumber ++ ;
 };
 
 Game.prototype.isGameOver = function () {
@@ -36,14 +42,16 @@ Game.prototype.isGameOver = function () {
 
 Game.prototype.updateScore = function (score) {
   this.gameScore += score;
-}
+};
 
 Game.prototype.calculateScore = function(){
-  var frameNumber = this.gameFrames.length;
-  var frameScore = this.gameFrames[frameNumber - 1].score;
-
+  var frameScore = this.currentFrame().score;
   this.updateScore(frameScore);
-}
+};
+
+Game.prototype.currentFrame = function(){
+  return this.gameFrames[this.currentFrameNumber - 1];
+};
 
 
 module.exports = Game;

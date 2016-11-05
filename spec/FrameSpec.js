@@ -11,7 +11,7 @@ var game = new Game();
 
 describe ('one frame', function(){
   beforeEach(function(){
-   roll =  game.roll();
+    roll =  game.roll();
     frame = new Frame(roll);
   });
   it('a frame consist of max 2 rolls', function(){
@@ -36,12 +36,16 @@ describe ('score of a frame', function(){
   });
 
   it('the sum of the first and second roll is max of 10', function(){
-      expect(frame.score).toBeLessThanOrEqualTo(10);
+    expect(frame.score).toBeLessThanOrEqualTo(10);
   });
 });
 
 describe ('no bonus frame', function(){
   it('when there is no spare and strike roll', function (){
+    roll = [3,4];
+    frame = new Frame(roll);
+    expect(frame.isStrike()).toEqual(false);
+    expect(frame.isSpare()).toEqual(false);
   });
 });
 
@@ -62,10 +66,3 @@ describe ('Spare frame', function(){
     expect(frame.isStrike()).toEqual(false);
   });
 });
-
-
-
-
-// bonuses:
-  // spare bonus: first roll of next frame
-  // strike bonus: 2 rolls after strike.
