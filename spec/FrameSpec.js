@@ -1,60 +1,71 @@
 'use strict';
 
-var Frame = require('../src/frame');
+var Frame = require('../src/Frame');
+var Game = require('../src/Game');
 require('jasmine-expect');
-var frame = new Frame();
+// var frame = new Frame();
+var frame;
 var roll;
+var game = new Game();
+
+
 describe ('one frame', function(){
-  frame = new Frame();
+  beforeEach(function(){
+   roll =  game.roll();
+    frame = new Frame(roll);
+  });
+  it('a frame consist of max 2 rolls', function(){
+    expect(frame.rolls.length).toBeLessThanOrEqualTo(2);
+
+  });
   it('two rolls of a frame adds up as the score for the frame', function(){
     roll = [2,3];
-    frame.addRollScore(roll);
+    frame = new Frame(roll);
     expect(frame.score).toEqual(5);
   });
 });
 
-describe ('score', function(){
-  frame = new Frame();
-  it('at start of the frame the rolls array is empty', function(){
-    expect(frame.rolls).toEqual([]);
+describe ('score of a frame', function(){
+  beforeEach(function(){
+    roll = game.roll();
+    frame = new Frame(roll);
+  })
+  it('at start of the frame the rolls array is empty by default', function(){
+    frame = new Frame([]);
+    expect(frame.rolls).toBeDefined();
   });
 
   it('the sum of the first and second roll is max of 10', function(){
-    frame = new Frame();
-    var rollScore = frame.roll();
-    frame.addRollScore(rollScore);
-    expect(frame.score).toBeLessThanOrEqualTo(10);
+      expect(frame.score).toBeLessThanOrEqualTo(10);
+  });
+});
+
+describe ('no bonus frame', function(){
+  it('when there is no spare and strike roll', function (){
   });
 });
 
 describe ('Strike frame', function(){
-  frame = new Frame();
   it('when the first roll is 10 its a strike frame', function(){
-    frame.rolls = [10,0];
-    frame.addRollScore(roll);
+    roll = [10,0]
+    frame = new Frame(roll);
     expect(frame.isStrike()).toEqual(true);
+    expect(frame.isSpare()).toEqual(false);
   });
 });
 
 describe ('Spare frame', function(){
-  frame = new Frame();
   it('when all the pins gets knocked down in the second roll', function(){
-    frame.rolls = [7,3];
-    frame.addRollScore(roll);
+    roll = [7,3];
+    frame = new Frame(roll);
     expect(frame.isSpare()).toEqual(true);
+    expect(frame.isStrike()).toEqual(false);
   });
 });
 
 
-// have a game
-// a game has a frame
-// a frame has two rolls (normally), one roll if first is strike
-// can roll
-// rolls have scores equivalent to the number of knocked pins
-// a roll is random between 0-10
-// a frame can be strike if all pins get knocked in the first roll
-// a frame can be spare is all remining pins get knocked in the second
-  // roll of a frame
+
+
 // bonuses:
   // spare bonus: first roll of next frame
   // strike bonus: 2 rolls after strike.
