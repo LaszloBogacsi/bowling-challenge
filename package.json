@@ -1,0 +1,36 @@
+{
+  "name": "bowling-challenge",
+  "version": "1.0.0",
+  "description": "Scoring a bowling game",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "jasmine": "^2.5.2",
+    "jasmine-expect": "^3.0.1",
+    "node": "^0.0.0"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/jasmine-node spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LaszloBogacsi/bowling-challenge.git"
+  },
+  "keywords": [
+    "bowling",
+    "scores",
+    "challenge"
+  ],
+  "author": "Laszlo Bogacsi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LaszloBogacsi/bowling-challenge/issues"
+  },
+  "homepage": "https://github.com/LaszloBogacsi/bowling-challenge#readme"
+}
