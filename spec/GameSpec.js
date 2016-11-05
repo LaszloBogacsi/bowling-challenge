@@ -9,14 +9,16 @@ var roll;
 var game;
 
 // // this is a random roll function that never returns strike or spare.
-// var NUMBER_OF_PINS = 10;
-// roll = function () {
-//   var firstRoll = Math.floor(Math.random()*(NUMBER_OF_PINS));
-//   var secondRoll = Math.floor(Math.random()*(NUMBER_OF_PINS - firstRoll));
-//   var roll = [firstRoll, secondRoll];
-//   var frame = new Frame(roll);
-//   return roll;
-// };
+var NUMBER_OF_PINS = 10;
+var rollHelper = function (fRoll, sRoll) {
+  var firstRoll = fRoll;
+  var secondRoll = sRoll;
+  var roll = [firstRoll, secondRoll];
+  var frame = new Frame(roll);
+  game.addToGameFrames(frame);
+  game.calculateScore();
+  return roll;
+};
 
 describe ('A game', function(){
 
@@ -43,10 +45,6 @@ describe ('A game', function(){
 
 });
 
-
-
-
-
 describe ('Playing multiple frames', function(){
   beforeEach(function(){
     game = new Game();
@@ -61,9 +59,9 @@ describe ('Playing multiple frames', function(){
 
 
   it('when all the frames are normal no bonus scenarios', function(){
-    roll = [2,2];
+    // roll = [2,2];
     for(var i = 0; i < 10; i++){
-       new Frame(roll);
+       rollHelper(2,2);
     }
     expect(game.gameScore).toEqual(40);
   });

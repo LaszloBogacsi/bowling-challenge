@@ -1,17 +1,15 @@
 // Frame describes the behaviour of one bowling game frame.
 
 function Frame (roll) {
+  this.NUMBER_OF_PINS = 10;
   this.score = 0;
   this.rolls = roll;
-  this.NUMBER_OF_PINS = 10;
   this.spare = false;
   this.strike = false;
 
   this.isSpare(roll);
   this.isStrike(roll);
   this.addRollScore(roll);
-
-
 }
 
 

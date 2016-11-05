@@ -18,6 +18,7 @@ Game.prototype.roll = function () {
   var roll = [firstRoll, secondRoll];
   var frame = new Frame(roll);
   this.addToGameFrames(frame);
+  this.calculateScore();
   return roll;
 };
 
@@ -32,6 +33,17 @@ Game.prototype.isGameOver = function () {
     return true;
   }
 };
+
+Game.prototype.updateScore = function (score) {
+  this.gameScore += score;
+}
+
+Game.prototype.calculateScore = function(){
+  var frameNumber = this.gameFrames.length;
+  var frameScore = this.gameFrames[frameNumber - 1].score;
+
+  this.updateScore(frameScore);
+}
 
 
 module.exports = Game;
