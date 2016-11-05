@@ -18,6 +18,35 @@ var game;
 //   return roll;
 // };
 
+describe ('A game', function(){
+
+  beforeEach(function(){
+    game = new Game();
+  });
+  it('has a max of 10 frames', function(){
+    for(var i = 0; i < 10; i++){
+      game.roll();
+    }
+    expect(game.gameOver).toEqual(false);
+  });
+
+  it('is over at 10 frames', function(){
+    for(var i = 0; i < 11; i++){
+      game.roll();
+    }
+    expect(game.gameOver).toEqual(true);
+  });
+
+  it('has a 0 score at start of the game', function(){
+    expect(game.gameScore).toEqual(0);
+  });
+
+});
+
+
+
+
+
 describe ('Playing multiple frames', function(){
   beforeEach(function(){
     game = new Game();
@@ -30,9 +59,6 @@ describe ('Playing multiple frames', function(){
     expect(game.gameFrames.length).toEqual(3);
   });
 
-  it('a game has a max of 10 frames', function(){
-
-  });
 
   it('when all the frames are normal no bonus scenarios', function(){
     roll = [2,2];
@@ -49,9 +75,6 @@ describe ('Game score in no bonus frames', function(){
     game.roll();
   });
 
-  it('is 0 at start of the game', function(){
-
-  });
 
   it('updating after every frame', function(){
 
