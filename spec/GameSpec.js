@@ -24,14 +24,20 @@ describe ('Playing multiple frames', function(){
   });
 
   it('stores all the frames in an array', function(){
-    
+    for(var i = 0; i < 3; i++){
+      game.roll();
+    }
+    expect(game.gameFrames.length).toEqual(3);
+  });
+
+  it('a game has a max of 10 frames', function(){
+
   });
 
   it('when all the frames are normal no bonus scenarios', function(){
     roll = [2,2];
     for(var i = 0; i < 10; i++){
        new Frame(roll);
-       i++;
     }
     expect(game.gameScore).toEqual(40);
   });
