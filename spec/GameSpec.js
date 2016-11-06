@@ -57,9 +57,7 @@ describe ('Playing multiple frames', function(){
     expect(game.gameFrames.length).toEqual(3);
   });
 
-
   it('updates scores when all the frames are normal no bonus scenarios', function(){
-    // roll = [2,2];
     for(var i = 0; i < 10; i++){
       rollHelper(2,2);
     }
@@ -67,9 +65,15 @@ describe ('Playing multiple frames', function(){
   });
 });
 
-describe ('Game score in no bonus frames', function(){
+describe ('Game score in bonus frames', function(){
   beforeEach(function(){
     game = new Game();
-    game.roll();
+  });
+
+  it('spare scenario', function(){
+    rollHelper(1,1);
+    rollHelper(5,5);
+    rollHelper(1,1);
+    expect(game.gameScore).toEqual(15);
   });
 });
