@@ -25,9 +25,9 @@ describe ('one frame', function(){
   });
 });
 
-describe ('score of a frame', function(){
+describe ('Score of a frame', function(){
   beforeEach(function(){
-    roll = game.roll();
+    roll = game.roll(1,3);
     frame = new Frame(roll);
   })
   it('at start of the frame the rolls array is empty by default', function(){

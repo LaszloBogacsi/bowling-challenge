@@ -4,23 +4,65 @@
 var Frame = require('./Frame')
 
 function Game () {
-  this.gameScore = 0;
+  this.gameScore = [];
   this.NUMBER_OF_PINS = 10;
   this.MAX_FRAMES = 10;
   this.gameFrames = [];
   this.gameOver = false;
   this.currentFrameNumber = 0;
+  this.gameScoreTotal = 0;
 }
 
-Game.prototype.roll = function () {
-  this.isGameOver();
-  var firstRoll = Math.floor(Math.random()*(this.NUMBER_OF_PINS + 1));
+var randomRoll1 = function(){
+  var firstRoll = Math.floor(Math.random()*(10 + 1));
+  return firstRoll;
+}
+var randomRoll2 = function(){
   var secondRoll = Math.floor(Math.random()*
-  (this.NUMBER_OF_PINS - firstRoll + 1));
-  var roll = [firstRoll, secondRoll];
+  (10 - randomRoll1() + 1));
+  return secondRoll;
+};
+
+Game.prototype.newRoll = function(){
+  this.roll(randomRoll1(), randomRoll2());
+}
+
+Game.prototype.spareBonus = function (){
+  if (this.currentFrameNumber !== 0 && this.gameFrames[this.currentFrameNumber -1].spare === true){
+    var spareBonus = roll[0];
+    this.gameScore[this.currentFrameNumber - 1] = 10 + spareBonus;
+  }
+};
+
+Game.prototype.strikeBonus = function () {
+  if (this.currentFrameNumber !== 0 && this.gameFrames[this.currentFrameNumber -1].strike === true){
+    var strikeBonus = roll[0] + roll[1];
+    if (this.currentFrameNumber !== 1 && this.gameFrames[this.currentFrameNumber -2].strike === true){
+      this.gameScore[this.currentFrameNumber - 2] = 20 + strikeBonus;
+    }
+    this.gameScore[this.currentFrameNumber - 1] = 10 + strikeBonus;
+  }
+};
+var roll = []
+Game.prototype.roll = function (firstRoll, secondRoll) {
+  this.isGameOver();
+  roll = [firstRoll];
   var frame = new Frame(roll);
-  this.addToGameFrames(frame);
-  this.calculateScore();
+  this.spareBonus();
+  roll.push(secondRoll);
+  this.strikeBonus();
+  frame.isSpare(roll);
+  frame.addRollScore(roll);
+  if (frame.isSpare) {
+    this.addToGameFrames(frame);
+    this.calculateScore();
+  } else if (frame.isStrike){
+    this.addToGameFrames(frame);
+    this.calculateScore();
+  } else {
+    this.addToGameFrames(frame);
+    this.calculateScore();
+  }
   return roll;
 };
 
@@ -40,34 +82,24 @@ Game.prototype.isGameOver = function () {
   }
 };
 
-Game.prototype.updateScore = function (score) {
-  this.gameScore += score;
-};
-
-Game.prototype.calculateScore = function(){
-  if (this.currentFrame().spare) {
-    this.calculateSpareBonus(this.currentFrameNumber)+
-    this.updateScore(this.currentFrame().score);
-
-
-  // } else if (this.currentFrame().strike) {
-  //   this.calculateStrikeBonus();
-  } else {
-    var frameScore = this.currentFrame().score;
-    this.updateScore(frameScore);
-  }
-};
-
 Game.prototype.currentFrame = function(){
   return this.gameFrames[this.currentFrameNumber - 1];
 };
 
-Game.prototype.calculateSpareBonus = function (currentFrameNumber) {
-  var bonus = 0;
-  bonus = this.gameFrames[currentFrameNumber - 1].rolls[0];
-  console.log(bonus);
-  return bonus;
+Game.prototype.calculateScore = function(){
+  var frameScore = this.currentFrame().score;
+  this.updateScore(frameScore);
 };
 
+Game.prototype.updateScore = function (score) {
+  this.gameScore.push(score);
+  this.calculateGameScoreTotal(this.gameScore);
+};
+
+Game.prototype.calculateGameScoreTotal = function (gameScore) {
+  var total = gameScore.reduce(function(a,b){return a + b;},0);
+  this.gameScoreTotal = total;
+  return total;
+};
 
 module.exports = Game;
