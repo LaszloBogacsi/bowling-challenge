@@ -56,12 +56,12 @@ Game.prototype.roll = function (firstRoll, secondRoll) {
   if (frame.isSpare) {
     this.addToGameFrames(frame);
     this.calculateScore();
-  } else if (frame.isStrike){
+  } else if (frame.strike){
     this.addToGameFrames(frame);
     this.calculateScore();
   } else {
-    this.addToGameFrames(frame);
-    this.calculateScore();
+    // this.addToGameFrames(frame);
+    // this.calculateScore();
   }
   return roll;
 };
