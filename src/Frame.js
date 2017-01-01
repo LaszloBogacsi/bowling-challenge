@@ -46,4 +46,4 @@ Frame.prototype.addRollScore = function(roll){
 
 
 
-module.exports = Frame;
+// module.exports = Frame;

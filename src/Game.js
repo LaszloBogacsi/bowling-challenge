@@ -1,7 +1,7 @@
-// Game describes the beviour of a bowling game keeping track of the overall
+// Game describes the behaviour of a bowling game keeping track of the overall
 //score of the game.
 
-var Frame = require('./Frame')
+// var Frame = require('./Frame');
 
 function Game () {
   this.gameScore = [];
@@ -12,19 +12,18 @@ function Game () {
   this.currentFrameNumber = 0;
   this.gameScoreTotal = 0;
 }
-
+var firstRoll;
 var randomRoll1 = function(){
-  var firstRoll = Math.floor(Math.random()*(10 + 1));
+  firstRoll = Math.floor(Math.random() * (10 + 1));
   return firstRoll;
 }
-var randomRoll2 = function(){
-  var secondRoll = Math.floor(Math.random()*
-  (10 - randomRoll1() + 1));
+var randomRoll2 = function(firstRandomRoll){
+  var secondRoll = Math.floor(Math.random() * (10 - firstRandomRoll + 1));
   return secondRoll;
 };
 
 Game.prototype.newRoll = function(){
-  this.roll(randomRoll1(), randomRoll2());
+  this.roll(randomRoll1(), randomRoll2(firstRoll));
 }
 
 Game.prototype.spareBonus = function (){
@@ -53,16 +52,8 @@ Game.prototype.roll = function (firstRoll, secondRoll) {
   this.strikeBonus();
   frame.isSpare(roll);
   frame.addRollScore(roll);
-  if (frame.isSpare) {
-    this.addToGameFrames(frame);
-    this.calculateScore();
-  } else if (frame.strike){
-    this.addToGameFrames(frame);
-    this.calculateScore();
-  } else {
-    // this.addToGameFrames(frame);
-    // this.calculateScore();
-  }
+  this.addToGameFrames(frame);
+  this.calculateScore();
   return roll;
 };
 
@@ -102,4 +93,4 @@ Game.prototype.calculateGameScoreTotal = function (gameScore) {
   return total;
 };
 
-module.exports = Game;
+// module.exports = Game;
