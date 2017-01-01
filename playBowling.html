@@ -58,12 +58,12 @@ td {
       for(var i = 0; i < 21; i++){
         var cell = document.createElement("td");
         var attr = document.createAttribute("id");
-        attr.value = `id${i}`;
+        attr.value = `roll${i}`;
         cell.setAttributeNode(attr);
         row.appendChild(cell);
       }
     </script>
-
+    <td id="total" rowspan="2"> </td>
   </tr>
   <tr id="sum">
     <script>
@@ -74,7 +74,8 @@ td {
         var colspAttr = document.createAttribute("colspan");
         colspAttr.value = 2;
         cell.setAttributeNode(colspAttr);
-        idAttr.value = `id${i}`;
+        idAttr.value = `sum${i}`;
+        cell.setAttributeNode(idAttr);
         row.appendChild(cell);
 
       }

@@ -6,12 +6,20 @@ $("#roll").click(function() {
   game.newRoll();
   console.log(game)
   updateFrameScore();
+
 })
 
 function updateFrameScore() {
-  var roll1 = game.gameFrames[0].rolls[0];
-  var roll2 = game.gameFrames[0].rolls[1];
-  var currScore = game.gameScore[0];
+  var frameCount = game.currentFrameNumber;
+  console.log(frameCount);
+
+
+  var roll1 = game.gameFrames[frameCount - 1].rolls[0];
+  var roll2 = game.gameFrames[frameCount - 1].rolls[1];
+  var prevPrevScore = game.gameScore[frameCount - 3];
+  var prevScore = game.gameScore[frameCount - 2];
+  var currScore = game.gameScore[frameCount - 1];
+  var total = game.gameScoreTotal;
 
 
 if (roll1 === 10) {
@@ -21,10 +29,14 @@ if (roll1 === 10) {
   roll2 = '/'
 };
 
-var frameCount = game.currentFrameNumber;
-  $(`#id${(frameCount*2)-2}`).text(roll1);
-  $(`#id${(frameCount*2)-1}`).text(roll2);
-  $("#sum td:nth-child(1)").text(currScore);
+  $(`#roll${(frameCount*2)-2}`).text(roll1);
+  $(`#roll${(frameCount*2)-1}`).text(roll2);
+  $(`#sum${(frameCount-1)}`).text(currScore);
+  $(`#sum${(frameCount-2)}`).text(prevScore);
+  $(`#sum${(frameCount-3)}`).text(prevPrevScore);
+  $("#total").text(total);
+
+
 
 
 }
