@@ -1,6 +1,6 @@
 $(document).ready(function(){
-
   var game = new Game();
+
 
 $("#roll").click(function() {
   game.newRoll();
@@ -10,9 +10,8 @@ $("#roll").click(function() {
 })
 
 function updateFrameScore() {
-  var frameCount = game.currentFrameNumber;
-  console.log(frameCount);
 
+  var frameCount = game.currentFrameNumber;
 
   var roll1 = game.gameFrames[frameCount - 1].rolls[0];
   var roll2 = game.gameFrames[frameCount - 1].rolls[1];
@@ -21,10 +20,17 @@ function updateFrameScore() {
   var currScore = game.gameScore[frameCount - 1];
   var total = game.gameScoreTotal;
 
+  if(frameCount > 10 && roll1 != 10) {
+    $("#roll").prop('disabled', true);
+    $("#roll").text('Game Over');
+    return;
+  } else if (frameCount > 10 && roll1 === 10) {
+
+  }
 
 if (roll1 === 10) {
-  roll1 = 'X'
-  roll2 = ''
+  roll1 = ''
+  roll2 = 'X'
 } else if (roll1 + roll2 === 10) {
   roll2 = '/'
 };
@@ -35,15 +41,6 @@ if (roll1 === 10) {
   $(`#sum${(frameCount-2)}`).text(prevScore);
   $(`#sum${(frameCount-3)}`).text(prevPrevScore);
   $("#total").text(total);
-
-
-
-
 }
-
-
-
-
-
 
 });

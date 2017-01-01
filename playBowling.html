@@ -4,85 +4,26 @@
   <meta charset="utf-8">
   <title>Bowling Game</title>
   <script src="./node_modules/jquery/dist/jquery.js"></script>
-  <script src="./src/playBowlingUI.js"> </script>
+  <script src="./src/playBowlingUIView.js"> </script>
+  <script src="./src/playBowlingUIController.js"> </script>
   <script src="./src/Frame.js"> </script>
-
   <script src="./src/Game.js"> </script>
+  <link rel="stylesheet" href="./css/master.css">
 </head>
 <body>
-  <button id="roll" type="button" name="roll"> Roll! </button>
-<style>
-table, th {
-  border: 1px solid black;
-  border-collapse: collapse;
-  padding: 5px;
-}
-td {
-  width: 10px;
-  padding: 8px;
-}
-#rollScore td:nth-child(odd), #id20 {
-  border: 1px solid black;
-}
-#sum {
-  text-align: center;
-}
-#sum td {
-  border-right: 1px solid black;
-}
 
-</style>
-<div>
+<div class="outer">
+
+  <p> 10 pin Bowling score calculator </p>
+    <button id="roll" type="button" name="roll"> Roll! </button>
+
+<div id="wrapper">
 <table>
-
-  <tr id='frameNumbers'>
-    <script>
-      var row = document.getElementById('frameNumbers');
-      for(var i = 1; i < 10; i++){
-        var cell = document.createElement("th");
-        text = document.createTextNode(i);
-        cell.appendChild(text);
-        var attr = document.createAttribute("colspan")
-        attr.value = 2;
-        cell.setAttributeNode(attr);
-        row.appendChild(cell);
-      }
-    </script>
-    <th colspan="3"> 10 </th>
-    <th colspan="1"> Total </th>
-
-  </tr>
-  <tr id="rollScore">
-    <script>
-      var row = document.getElementById('rollScore');
-      for(var i = 0; i < 21; i++){
-        var cell = document.createElement("td");
-        var attr = document.createAttribute("id");
-        attr.value = `roll${i}`;
-        cell.setAttributeNode(attr);
-        row.appendChild(cell);
-      }
-    </script>
-    <td id="total" rowspan="2"> </td>
-  </tr>
-  <tr id="sum">
-    <script>
-      var row = document.getElementById('sum');
-      for(var i = 0; i < 9; i++){
-        var cell = document.createElement("td");
-        var idAttr = document.createAttribute("id");
-        var colspAttr = document.createAttribute("colspan");
-        colspAttr.value = 2;
-        cell.setAttributeNode(colspAttr);
-        idAttr.value = `sum${i}`;
-        cell.setAttributeNode(idAttr);
-        row.appendChild(cell);
-
-      }
-    </script>
-    <td colspan="3"> Sum </td>
-  </tr>
+  <tr id='frameNumbers'> </tr>
+  <tr id="rollScore"> </tr>
+  <tr id="sum"> </tr>
 </table>
+</div>
 </div>
 
 </body>
